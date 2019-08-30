@@ -31,4 +31,12 @@ if [ "$socketMissing" = 1 -a "$1" = forego -a "$2" = start -a "$3" = '-r' ]; the
 	exit 1
 fi
 
+# ----------------------------------------------------------------------
+# Start SSH
+# ----------------------------------------------------------------------
+echo "Starting SSH..."
+exec /usr/sbin/sshd &
+(echo "Starting supervisord..."; /usr/bin/supervisord -c /etc/supervisord.conf -n)
+
+
 exec "$@"
