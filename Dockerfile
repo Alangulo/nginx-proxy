@@ -47,12 +47,6 @@ RUN apt-get update \
 
 
 COPY sshd_config /etc/ssh/
-
-COPY init.sh /usr/local/bin/
-
-RUN chmod u+x /usr/local/bin/init.sh
-
-
 ENV SSH_PORT 2222
 
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
