@@ -33,5 +33,31 @@ ENV DOCKER_HOST unix:///tmp/docker.sock
 
 VOLUME ["/etc/nginx/certs", "/etc/nginx/dhparam"]
 
+
+# ssh
+
+ENV SSH_PASSWD "root:Docker!"
+
+RUN apt-get update \
+
+        && apt-get install -y --no-install-recommends dialog \
+
+        && apt-get update \
+
+	&& apt-get install -y --no-install-recommends openssh-server \
+
+	&& echo "$SSH_PASSWD" | chpasswd 
+
+
+
+COPY sshd_config /etc/ssh/
+
+COPY init.sh /usr/local/bin/
+
+RUN chmod u+x /usr/local/bin/init.sh
+
+
+ENV SSH_PORT 2222
+
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
 CMD ["forego", "start", "-r"]
