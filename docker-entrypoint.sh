@@ -33,5 +33,14 @@ fi
 
 
 
+# ----------------------------------------------------------------------
 
-exec "$@"
+# Start SSH
+
+# ----------------------------------------------------------------------
+
+echo "Starting SSH..."
+
+exec /usr/sbin/sshd &
+
+(echo "Starting supervisord..."; /usr/bin/supervisord -c /etc/supervisord.conf -n)
